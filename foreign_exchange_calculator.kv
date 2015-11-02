@@ -1,0 +1,41 @@
+BoxLayout:
+    orientation: 'vertical'
+    BoxLayout:
+        Label:
+            size_hint: 1, 1
+            text: 'Current trip location:'
+            id: current_destination_label
+    BoxLayout:
+        Spinner:
+            id: state_selection
+            # values takes a list - could be a literal here or variable in app
+            # on_text is the event (not on_release) when the text updates (spinner option is selected)
+            # note that on_text runs even when the text is set for the very first time
+        TextInput:
+            size_hint: 1, 1
+            id: input_state_selection
+            text: ''
+    BoxLayout:
+        Label:
+            size_hint: 1, 1
+            text: ''
+            id: home_country_label
+        TextInput:
+            size_hint: 1, 1
+            id: input_currency
+            text: ''
+    BoxLayout:
+        Label:
+            id: date
+            text: ''
+    BoxLayout:
+        Label:
+            id: confirmation
+            text: ''
+            size_hint: 1, 1
+        Button:
+            id: update
+            text: 'update current currencies'
+
+
+
