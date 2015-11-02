@@ -10,13 +10,14 @@ class ForeignExchangeCalculator(App):
 
     def build(self):
         self.title = "Foreign Exhange Calculator"
-        self.root = Builder.load_file('foreign_exchange_calculator.kv')
+        self.root = Builder.load_file('gui.kv')
         Window.size = (350, 700)
         return self.root
 
     def current_trip_location(self, label):
-        print()
-
+        from trip import Details
+        import datetime
+        self.root.ids.date = datetime.time()
 
 
 
