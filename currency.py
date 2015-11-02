@@ -46,8 +46,16 @@ def get_details(country_name):
     file.close()
     return ()
 
-def get_all_details():
-    
+
+def get_all_details(country_name):
+    file = open('currency_details.txt', encoding='utf-8')
+    for line in file:
+        words = [word for word in line.strip().split(',')]
+        if words[0] == country_name:
+            file.close()
+            return {words[0]: words[1], words[0]: words[2]}
+        file.close()
+        return ()
 
 
 if __name__ == '__main__':
