@@ -7,10 +7,10 @@ BoxLayout:
             id: current_destination_label
     BoxLayout:
         Spinner:
-            id: state_selection
-            # values takes a list - could be a literal here or variable in app
-            # on_text is the event (not on_release) when the text updates (spinner option is selected)
-            # note that on_text runs even when the text is set for the very first time
+            id: country_selection
+            text: app.current_country
+            values: app.sorted_country_names
+
         TextInput:
             size_hint: 1, 1
             id: input_state_selection
@@ -18,7 +18,6 @@ BoxLayout:
     BoxLayout:
         Label:
             size_hint: 1, 1
-            text: ''
             id: home_country_label
         TextInput:
             size_hint: 1, 1
@@ -28,7 +27,6 @@ BoxLayout:
         Label:
             id: date
             text: ''
-            on_press: app.current_trip_location()
     BoxLayout:
         Label:
             id: confirmation
