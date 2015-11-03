@@ -3,13 +3,12 @@ BoxLayout:
     BoxLayout:
         Label:
             size_hint: 1, 1
-            text: 'Current trip location:'
+            text: 'Current trip location: '
             id: current_destination_label
     BoxLayout:
         Spinner:
             id: country_selection
-            text: app.current_country
-            values: app.sorted_country_names
+            values: app.sorted_dateless_country_names
 
         TextInput:
             size_hint: 1, 1
@@ -26,7 +25,7 @@ BoxLayout:
     BoxLayout:
         Label:
             id: date
-            text: ''
+            text: 'Today is: '
     BoxLayout:
         Label:
             id: confirmation

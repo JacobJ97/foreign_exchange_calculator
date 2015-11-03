@@ -1,14 +1,14 @@
 __author__ = 'Jake'
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.properties import StringProperty
 from kivy.properties import ListProperty
 from kivy.core.window import Window
+from trip import Details
+import time
 
 
 class ForeignExchangeCalculator(App):
-    sorted_country_names = ListProperty()
-    current_country = StringProperty()
+    sorted_dateless_country_names = ListProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -39,14 +39,33 @@ class ForeignExchangeCalculator(App):
             sorted_country_name = sorted_country_names[a]
             sorted_country_name_split = sorted_country_name.split(",")
             sorted_dateless_country_names.append(sorted_country_name_split[0])
-        current_country = sorted_dateless_country_names[0]
         self.root.ids.country_selection.values = sorted_dateless_country_names
-        self.root.ids.country_selection.text = current_country
+
+        #date
+        self.root.ids.date.text = self.root.ids.date.text + time.strftime("%Y/%m/%d")
+
+        # current location
+        file = open('config.txt', encoding='utf-8')
+        country_details = file.readlines()
+        current_time = time.strftime("%Y/%m/%d")
+        b = -1
+        for i in range(len(country_details)):
+            b += 1
+            if
+            country_details = country_details[b]
+            country_details_split = country_details.split(",")
+            if country_details_split[1] <= current_time <= country_details_split[2]:
+                self.root.ids.current_destination_label.text += country_details_split[0]
+                return self.root.ids.current_destination_label.text
+
         return self.root
 
-    # def change_country(self):
-    #     self.root.ids.output_label.text = sorted_country_codes
-    #     print "changed to", state_code
+
+
+
+
+
+
 
 
 
