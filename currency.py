@@ -53,7 +53,9 @@ def get_all_details(country_name):
         words = [word for word in line.strip().split(',')]
         if words[0] == country_name:
             file.close()
-            return {words[0]: words[1], words[0]: words[2]}
+            detail_dic = {}
+            detail_dic[words[0]] = (words[0], words[1], words[2])
+            return detail_dic
         file.close()
         return ()
 
