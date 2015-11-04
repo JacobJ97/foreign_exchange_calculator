@@ -12,7 +12,7 @@ BoxLayout:
 
         TextInput:
             size_hint: 1, 1
-            id: input_state_selection
+            id: input_country_amount
             text: ''
     BoxLayout:
         Label:
@@ -20,7 +20,7 @@ BoxLayout:
             id: home_country_label
         TextInput:
             size_hint: 1, 1
-            id: input_currency
+            id: input_home_country_amount
             text: ''
     BoxLayout:
         Label:
@@ -28,12 +28,13 @@ BoxLayout:
             text: 'Today is: '
     BoxLayout:
         Label:
-            id: confirmation
+            id: status
             text: ''
             size_hint: 1, 1
         Button:
             id: update
             text: 'update current currencies'
+            on_press: app.button_press()
 
 
 
