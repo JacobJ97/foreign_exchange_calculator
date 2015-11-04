@@ -47,32 +47,15 @@ class ForeignExchangeCalculator(App):
         # current location
         file = open('config.txt', encoding='utf-8')
         country_details = file.readlines()
+        del(country_details[0])
         current_time = time.strftime("%Y/%m/%d")
         b = -1
         for i in range(len(country_details)):
             b += 1
-            if
-            country_details = country_details[b]
-            country_details_split = country_details.split(",")
+            country_details_seperated = country_details[b]
+            country_details_split = country_details_seperated.split(",")
             if country_details_split[1] <= current_time <= country_details_split[2]:
                 self.root.ids.current_destination_label.text += country_details_split[0]
-                return self.root.ids.current_destination_label.text
-
         return self.root
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ForeignExchangeCalculator().run()
