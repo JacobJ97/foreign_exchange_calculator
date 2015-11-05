@@ -2,6 +2,7 @@ from io import open
 
 detail_dic = dict()
 
+
 def convert(amount, home_currency, target_currency):
     from web_utility import load_page
 
