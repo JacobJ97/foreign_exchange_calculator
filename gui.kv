@@ -15,6 +15,9 @@ BoxLayout:
             size_hint: 1, 1
             id: input_country_amount
             text: ''
+            multiline: False
+            on_text_validate: app.change_amount()
+
 
     BoxLayout:
         Label:
@@ -24,6 +27,8 @@ BoxLayout:
             size_hint: 1, 1
             id: input_home_country_amount
             text: ''
+            multiline: False
+            on_text_validate: app.change_amount()
     BoxLayout:
         Label:
             id: date
@@ -36,7 +41,7 @@ BoxLayout:
         Button:
             id: update
             text: 'update current currencies'
-            on_press: app.button_press()
+            on_press: app.update_currency()
 
 
 

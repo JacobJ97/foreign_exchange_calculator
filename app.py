@@ -3,6 +3,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import ListProperty
 from kivy.core.window import Window
+from kivy.uix.textinput import TextInput
 from trip import Details
 import currency
 import time
@@ -80,36 +81,50 @@ class ForeignExchangeCalculator(App):
     #     self.root.ids.country_selection.text = country_list_dictionary[self.country_name_code]
     #     print("changed to", self.country_list_dictionary[self.country_name_code])
 
-    def button_press(self):
+    def update_currency(self):
         # text input enable
         # self.root.ids.input_country_amount.disabled = False
         # self.root.ids.input_home_country_amount.disabled = False
 
         # currency exchange
-        currency1 = self.root.ids.input_home_country_amount.text
-        currency2 = self.root.ids.input_country_amount.text
+        self.currency1 = self.root.ids.input_home_country_amount.text
+        self.currency2 = self.root.ids.input_country_amount.text
 
         # spinner / home information grabbing
-        country1 = self.root.ids.home_country_label.text
-        country2 = self.root.ids.country_selection.text
-        country_details1 = currency.get_details(country1)
-        country_details2 = currency.get_details(country2)
+        self.country1 = self.root.ids.home_country_label.text
+        self.country2 = self.root.ids.country_selection.text
+        self.country_details1 = currency.get_details(self.country1)
+        self.country_details2 = currency.get_details(self.country2)
 
-        if currency1 is "":
-            amount2 = currency.convert(currency2, country_details2[1], country_details1[1])
-            print(amount2)
-            self.root.ids.status.text = "{}({}) -> {}({})".format(country_details2[1],  country_details2[2], country_details1[1], country_details1[2])
-            self.root.ids.input_home_country_amount.text = str(amount2)
-            # currency_amount_difference1 = currency.convert(1, country_details2[1], country_details1[1])
-            # self.root.ids.input_home_country_amount.text = amount2 * currency_amount_difference1
+        if self.currency1 is "":
+            self.amount2 = currency.convert(self.currency2, self.country_details2[1], self.country_details1[1])
+            print(self.amount2)
+            self.root.ids.input_home_country_amount.text = str(self.amount2)
+            current_time = time.strftime("%H:%M:%S")
+            self.root.ids.status.text = "updated at {}".format(current_time)
 
-        elif currency2 is "":
-            amount1 = currency.convert(currency1, country_details1[1], country_details2[1])
-            print(amount1)
-            self.root.ids.input_country_amount.text = str(amount1)
-            self.root.ids.status.text = "{}({}) -> {}({})".format(country_details1[1],  country_details2[2],  country_details2[1], country_details2[2])
-            # currency_amount_difference2 = currency.convert(1, country_details1[1], country_details2[1])
-            # self.root.ids.input_country_amount.text = amount1 * currency_amount_difference2
+        elif self.currency2 is "":
+            self.amount1 = currency.convert(self.currency1, self.country_details1[1], self.country_details2[1])
+            print(self.amount1)
+            self.root.ids.input_country_amount.text = str(self.amount1)
+            current_time = time.strftime("%H:%M:%S")
+            self.root.ids.status.text = "updated at {}".format(current_time)
+
+    def change_amount(self):
+        self.currency1 = self.root.ids.input_home_country_amount.text
+        self.currency2 = self.root.ids.input_country_amount.text
+
+        if self.currency1 is "":
+            self.amount2 = currency.convert(self.currency2, self.country_details2[1], self.country_details1[1])
+            print(self.amount2)
+            self.root.ids.input_home_country_amount.text = str(self.amount2)
+            self.root.ids.status.text = "{}({}) -> {}({})".format(self.country_details2[1],  self.country_details2[2], self.country_details1[1], self.country_details1[2])
+
+        elif self.currency2 is "":
+            self.amount1 = currency.convert(self.currency1, self.country_details1[1], self.country_details2[1])
+            print(self.amount1)
+            self.root.ids.input_country_amount.text = str(self.amount1)
+            self.root.ids.status.text = "{}({}) -> {}({})".format(self.country_details1[1],  self.country_details1[2],  self.country_details2[1], self.country_details2[2])
 
 
 
