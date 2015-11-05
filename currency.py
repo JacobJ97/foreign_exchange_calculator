@@ -1,5 +1,6 @@
 from io import open
 
+detail_dic = dict()
 
 def convert(amount, home_currency, target_currency):
     from web_utility import load_page
@@ -53,11 +54,10 @@ def get_all_details(country_name):
         words = [word for word in line.strip().split(',')]
         if words[0] == country_name:
             file.close()
-            detail_dic = {}
             detail_dic[words[0]] = (words[0], words[1], words[2])
             return detail_dic
-        file.close()
-        return ()
+    file.close()
+    return ()
 
 
 if __name__ == '__main__':

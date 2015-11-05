@@ -10,7 +10,7 @@ import os.path
 
 
 class ForeignExchangeCalculator(App):
-    sorted_dateless_country_names = ListProperty()
+    country_name_codes = ([])
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -20,7 +20,7 @@ class ForeignExchangeCalculator(App):
         # main window widget build
         self.title = "Foreign Exchange Calculator"
         self.root = Builder.load_file('gui.kv')
-        Window.size = (350, 700)
+        Window.size = (500, 700)
 
         # text input disable
         self.root.ids.input_country_amount.disabled = True
@@ -48,13 +48,13 @@ class ForeignExchangeCalculator(App):
         sorted_country_names = sorted(country_names)
         # removes date details from the country list
         a = -1
-        sorted_dateless_country_names = []
         for countries in range(len(sorted_country_names)):
             a += 1
             sorted_country_name = sorted_country_names[a]
-            sorted_country_name_split = sorted_country_name.split(",")
-            sorted_dateless_country_names.append(sorted_country_name_split[0])
-        self.root.ids.country_selection.values = sorted_dateless_country_names
+            sorted_country_name_split = sorted_country_name.rstrip("\n").split(",")
+            country_list_dictionary = currency.get_all_details(sorted_country_name_split[0])
+            country_name_codes = sorted(country_list_dictionary.keys())
+        self.root.ids.country_selection.values = country_name_codes
 
         #date
         self.root.ids.date.text = self.root.ids.date.text + time.strftime("%Y/%m/%d")
@@ -74,6 +74,11 @@ class ForeignExchangeCalculator(App):
         self.root.ids.current_destination_label.text += current_location
         return self.root
 
+    # def change_state(self):
+    #     """ handle change of spinner selection, output result to label widget """
+    #     self.root.ids.country_selection.text = country_list_dictionary[self.country_name_code]
+    #     print("changed to", self.country_list_dictionary[self.country_name_code])
+
     def button_press(self):
         # text input enable
         self.root.ids.input_country_amount.disabled = False
@@ -86,9 +91,9 @@ class ForeignExchangeCalculator(App):
         # spinner / home information grabbing
         country1 = self.root.ids.home_country_label.text
         country2 = self.root.ids.country_selection.text
-        country_dic_details1 = currency.get_all_details(country1)
-        country_dic_details2 = currency.get_all_details(country2)
-        amount1 = currency.convert(currency1, country_dic_details1, country_dic_details2)
+        country_dic_details1 = currency.get_details(country1)
+        country_dic_details2 = currency.get_details(country2)
+        amount1 = currency.convert(currency1, country_dic_details1[1], country_dic_details2[1])
 
         print(amount1)
         print(amount2)
