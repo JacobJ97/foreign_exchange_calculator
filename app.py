@@ -28,7 +28,7 @@ class ForeignExchangeCalculator(App):
         # status label - config file
         if not os.path.isfile('config.txt'):
             self.root.ids.status.text = "The config file cannot be loaded"
-            pass
+            return
         else:
             self.root.ids.status.text = "The config file successfully loaded"
 
@@ -53,10 +53,9 @@ class ForeignExchangeCalculator(App):
             sorted_country_name_split = sorted_country_name.rstrip("\n").split(",")
             country_list_dictionary = currency.get_all_details(sorted_country_name_split[0])
             country_name_codes = sorted(country_list_dictionary.keys())
-            print(country_list_dictionary.items())
         self.root.ids.country_selection.values = country_name_codes
 
-        #date
+        # date
         self.root.ids.date.text = self.root.ids.date.text + time.strftime("%Y/%m/%d")
 
         # current location
@@ -90,16 +89,19 @@ class ForeignExchangeCalculator(App):
         self.currency1 = self.root.ids.input_home_country_amount.text
         self.currency2 = self.root.ids.input_country_amount.text
 
-        # spinner / home information grabbing
+        # spinner / home country name grabbing
         self.country1 = self.root.ids.home_country_label.text
         self.country2 = self.root.ids.country_selection.text
 
+        # checks if spinner selection is blank
         if self.country2 is "":
             self.country2 = self.root.ids.country_selection.text = self.current_location
 
+        # gets country details
         self.country_details1 = currency.get_details(self.country1)
         self.country_details2 = currency.get_details(self.country2)
 
+        # checks to see if there was an inputted currency in the "home country" textbox, if there is no value, then it is assumed that the spinner country textbox has an inputted value.
         if self.currency1 is "":
             self.amount2 = currency.convert(self.currency2, self.country_details2[1], self.country_details1[1])
             print(self.amount2)
@@ -111,6 +113,7 @@ class ForeignExchangeCalculator(App):
             current_time = time.strftime("%H:%M:%S")
             self.root.ids.status.text = "updated at {}".format(current_time)
 
+        # checks to see if there was an inputted currency in the spinner country textbox, if there is no value, then it is assumed that the "home country" textbox has an inputted value.
         elif self.currency2 is "":
             self.amount1 = currency.convert(self.currency1, self.country_details1[1], self.country_details2[1])
             self.amount1 = round(self.amount1, 3)
@@ -122,6 +125,7 @@ class ForeignExchangeCalculator(App):
             current_time = time.strftime("%H:%M:%S")
             self.root.ids.status.text = "updated at {}".format(current_time)
 
+        # is launched when a person presses enter
     def change_amount(self):
         self.currency1 = self.root.ids.input_home_country_amount.text
         self.currency2 = self.root.ids.input_country_amount.text
@@ -149,19 +153,11 @@ class ForeignExchangeCalculator(App):
             self.root.ids.input_country_amount.text = str(self.amount1)
             self.root.ids.status.text = "{}({}) -> {}({})".format(self.country_details1[1],  self.country_details1[2],  self.country_details2[1], self.country_details2[2])
 
+        # launched if somebody types into any textbox
     def clear_textinput(self):
         if self.root.ids.input_country_amount.focus is True:
             self.root.ids.input_home_country_amount.text = ''
         elif self.root.ids.input_home_country_amount.focus is True:
             self.root.ids.input_country_amount.text = ''
-
-
-
-
-
-
-
-
-
 
 ForeignExchangeCalculator().run()
