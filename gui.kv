@@ -17,6 +17,7 @@ BoxLayout:
             text: ''
             multiline: False
             on_text_validate: app.change_amount()
+            on_text: app.clear_textinput()
 
 
     BoxLayout:
@@ -29,6 +30,7 @@ BoxLayout:
             text: ''
             multiline: False
             on_text_validate: app.change_amount()
+            on_text: app.clear_textinput()
     BoxLayout:
         Label:
             id: date
